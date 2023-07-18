@@ -1,10 +1,11 @@
-package studentinfo;
+package sis.studentinfo;
 
+import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StudentTest {
+public class StudentTest extends TestCase {
 
     @Test
     public void testCreate() {
@@ -17,12 +18,5 @@ class StudentTest {
         assertEquals(secondStudentName, student2.getName());
 
         assertEquals(firstStudentName, student1.getName());
-    }
-    @Test
-    void setName() {
-    }
-
-    @Test
-    void getName() {
     }
 }
