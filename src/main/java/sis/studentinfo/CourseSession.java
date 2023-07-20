@@ -14,6 +14,9 @@ public class CourseSession {
     private ArrayList<Student> students =
             new ArrayList<Student>();
     private Date startDate;
+    private static int count;
+
+    private int numberOfCredits;
 
     /**
      * Construtor da classe
@@ -21,10 +24,18 @@ public class CourseSession {
      * @param number o número da sessão.
      * @param startDate a data de início da sessão.
      */
-    public CourseSession(String department, int number, Date startDate) {
+    private CourseSession(String department, int number, Date startDate) {
         this.department = department;
         this.number = number;
         this.startDate = startDate;
+    }
+
+    public static CourseSession create(
+            String department,
+            int number,
+            Date startDate) {
+        CourseSession.incrementCount();
+        return new CourseSession(department, number, startDate);
     }
 
     public void setDepartment(String department) {
@@ -44,6 +55,7 @@ public class CourseSession {
     }
 
     public void enroll(Student student) {
+        student.addCredits(numberOfCredits);
         this.students.add(student);
     }
 
@@ -75,6 +87,21 @@ public class CourseSession {
 
     public ArrayList<Student> getAllStudents() {
         return students;
+    }
+
+    private static void incrementCount() {
+        count++;
+    }
+    public static void resetCount() {
+        count = 0;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public void setNumberOfCredits(int numberOfCredits) {
+        this.numberOfCredits = numberOfCredits;
     }
 
 }

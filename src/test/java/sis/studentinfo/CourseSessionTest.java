@@ -3,8 +3,6 @@ package sis.studentinfo;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.*;
 
 public class CourseSessionTest extends TestCase {
@@ -12,9 +10,11 @@ public class CourseSessionTest extends TestCase {
     private CourseSession session;
     private Date startDate;
 
+    public static final int CREDITS = 3;
+
     public CourseSessionTest() {
-        startDate = new DateUtil().createDate(2003, 1, 6);
-        session = new CourseSession("ENGL", 101, startDate);
+        startDate = DateUtil.createDate(2003, 1, 6);
+        session = createCourseSession();
     }
 
     @Test
@@ -29,11 +29,13 @@ public class CourseSessionTest extends TestCase {
     public void testEnrollStudents() {
         Student student1 = new Student("Arthur Vinícius");
         session.enroll(student1);
+        assertEquals(CREDITS, student1.getCredits());
         assertEquals(1, session.getNumberOfStudents());
         assertEquals(student1, session.get(0));
 
         Student student2 = new Student("Ana Maria");
         session.enroll(student2);
+        assertEquals(CREDITS, student2.getCredits());
         assertEquals(2, session.getNumberOfStudents());
         assertEquals(student1, session.get(0));
         assertEquals(student2, session.get(1));
@@ -41,8 +43,24 @@ public class CourseSessionTest extends TestCase {
 
     @Test
     public void testCourseDates() {
-        Date sixteenWeeksOut = new DateUtil().createDate(2003, 4, 25);
+        Date sixteenWeeksOut = DateUtil.createDate(2003, 4, 25);
         assertEquals(sixteenWeeksOut, session.getEndDate());
     }
+
+    @Test
+    public void testCount() {
+        CourseSession.resetCount();
+        createCourseSession();
+        assertEquals(1, CourseSession.getCount());
+        createCourseSession();
+        assertEquals(2, CourseSession.getCount());
+    }
+
+    private CourseSession createCourseSession() {
+        CourseSession session = CourseSession.create("ENGL", 101, startDate);
+        session.setNumberOfCredits(CourseSessionTest.CREDITS);
+        return session;
+    }
+
 
 }

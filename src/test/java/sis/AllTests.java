@@ -4,9 +4,6 @@ import sis.studentinfo.*;
 import sis.report.*;
 
 import junit.framework.TestSuite;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import sis.report.RosterReporter;
 
 public class AllTests {
 
