@@ -13,6 +13,7 @@ public class AllTests {
         suite.addTestSuite(CourseSessionTest.class);
         suite.addTestSuite(DateUtilTest.class);
         suite.addTestSuite(RosterReporterTest.class);
+        suite.addTestSuite(CourseReportTest.class);
 
         return suite;
     }

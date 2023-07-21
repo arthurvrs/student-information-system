@@ -3,6 +3,7 @@ package sis.report;
 import sis.studentinfo.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RosterReporter {
 
@@ -24,7 +25,7 @@ public class RosterReporter {
 
         buffer.append(ROSTER_REPORT_HEADER);
 
-        ArrayList<Student> students = session.getAllStudents();
+        List<Student> students = session.getAllStudents();
 
         for(Student student: students) {
             buffer.append(student.getName());

@@ -7,12 +7,12 @@ import java.util.*;
  * de um curso universitário.
  * @author Arthur Santos
  */
-public class CourseSession {
+public class CourseSession implements Comparable<CourseSession>{
 
     private String department;
-    private int number;
-    private ArrayList<Student> students =
-            new ArrayList<Student>();
+    private String number;
+    private List<Student> students =
+            new LinkedList<Student>();
     private Date startDate;
     private static int count;
 
@@ -24,7 +24,7 @@ public class CourseSession {
      * @param number o número da sessão.
      * @param startDate a data de início da sessão.
      */
-    private CourseSession(String department, int number, Date startDate) {
+    private CourseSession(String department, String number, Date startDate) {
         this.department = department;
         this.number = number;
         this.startDate = startDate;
@@ -32,7 +32,7 @@ public class CourseSession {
 
     public static CourseSession create(
             String department,
-            int number,
+            String number,
             Date startDate) {
         CourseSession.incrementCount();
         return new CourseSession(department, number, startDate);
@@ -46,11 +46,11 @@ public class CourseSession {
         return this.department;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return this.number;
     }
 
@@ -85,7 +85,7 @@ public class CourseSession {
         return calendar.getTime();
     }
 
-    public ArrayList<Student> getAllStudents() {
+    public List<Student> getAllStudents() {
         return students;
     }
 
@@ -104,4 +104,11 @@ public class CourseSession {
         this.numberOfCredits = numberOfCredits;
     }
 
+    public int compareTo(CourseSession that) {
+        int compare = this.getDepartment().compareTo(that.getDepartment());
+        if(compare == 0) {
+            compare = this.getNumber().compareTo(that.getNumber());
+        }
+        return compare;
+    }
 }

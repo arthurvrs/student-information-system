@@ -20,7 +20,7 @@ public class CourseSessionTest extends TestCase {
     @Test
     public void testCreate() {
         assertEquals("ENGL", session.getDepartment());
-        assertEquals(101, session.getNumber());
+        assertEquals("101", session.getNumber());
         assertEquals(0, session.getNumberOfStudents());
         assertEquals(startDate, session.getStartDate());
     }
@@ -57,9 +57,24 @@ public class CourseSessionTest extends TestCase {
     }
 
     private CourseSession createCourseSession() {
-        CourseSession session = CourseSession.create("ENGL", 101, startDate);
+        CourseSession session = CourseSession.create("ENGL", "101", startDate);
         session.setNumberOfCredits(CourseSessionTest.CREDITS);
         return session;
+    }
+
+    @Test
+    public void testComparable() {
+
+        final Date date = new Date();
+        CourseSession sessionA = CourseSession.create("CMSC", "101", date);
+        CourseSession sessionB = CourseSession.create("ENGL", "101", date);
+        assertTrue(sessionA.compareTo(sessionB) < 0);
+        assertTrue(sessionB.compareTo(sessionA) > 0);
+        CourseSession sessionC = CourseSession.create("CMSC", "101", date);
+        assertEquals(0, sessionA.compareTo(sessionC));
+        CourseSession sessionD = CourseSession.create("CMSC", "210", date);
+        assertTrue(sessionC.compareTo(sessionD) < 0);
+        assertTrue(sessionD.compareTo(sessionC) > 0);
     }
 
 
