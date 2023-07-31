@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class CourseSessionTest extends TestCase {
+public class CourseSessionTest extends SessionTest {
 
     private CourseSession session;
     private Date startDate;
@@ -43,6 +43,8 @@ public class CourseSessionTest extends TestCase {
 
     @Test
     public void testCourseDates() {
+        Date startDate = DateUtil.createDate(2003, 1, 6);
+        Session session = createSession("ENGL", "200", startDate);
         Date sixteenWeeksOut = DateUtil.createDate(2003, 4, 25);
         assertEquals(sixteenWeeksOut, session.getEndDate());
     }
@@ -50,10 +52,17 @@ public class CourseSessionTest extends TestCase {
     @Test
     public void testCount() {
         CourseSession.resetCount();
-        createCourseSession();
+        createSession("", "", new Date());
         assertEquals(1, CourseSession.getCount());
-        createCourseSession();
+        createSession("", "", new Date());
         assertEquals(2, CourseSession.getCount());
+    }
+
+    protected Session createSession(
+            String department,
+            String number,
+            Date date) {
+        return CourseSession.create(department, number, date);
     }
 
     private CourseSession createCourseSession() {

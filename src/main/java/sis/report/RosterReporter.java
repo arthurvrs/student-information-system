@@ -2,7 +2,6 @@ package sis.report;
 
 import sis.studentinfo.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RosterReporter {

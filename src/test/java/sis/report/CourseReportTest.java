@@ -8,8 +8,6 @@ import static sis.report.RosterReporter.NEWLINE;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class CourseReportTest extends TestCase {
 
     @Test

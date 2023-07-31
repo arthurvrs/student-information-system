@@ -8,7 +8,24 @@ public class Student implements Comparable<Student>{
     private int credits;
     private String state;
     private ArrayList<Grade> grades;
-    enum Grade {A, B, C, D, F};
+    public enum Grade {
+        A(4),
+        B(3),
+        C(2),
+        D(1),
+        F(0);
+
+        private int points;
+
+        Grade(int points) {
+            this.points = points;
+        }
+
+        int getPoints() {
+            return points;
+        }
+
+    }
     private GradingStrategy gradingStrategy;
 
     public static final int CREDITS_REQUIRED_FOR_FULL_TIME = 12;
@@ -18,7 +35,7 @@ public class Student implements Comparable<Student>{
         this.credits = 0;
         this.state = "";
         this.grades = new ArrayList<>();
-        gradingStrategy = new RegularGradingStrategy();
+        gradingStrategy = new BasicGradingStrategy();
     }
 
     @Override
