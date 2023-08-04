@@ -8,12 +8,14 @@ abstract public class Session implements Comparable<Session> {
     private List<Student> students = new ArrayList<Student>();
     private Date startDate;
     private int numberOfCredits;
+
     protected Session(
             String department, String number, Date startDate) {
         this.department = department;
         this.number = number;
         this.startDate = startDate;
     }
+
     public int compareTo(Session that) {
         int compare =
                 this.getDepartment().compareTo(that.getDepartment());
@@ -21,31 +23,42 @@ abstract public class Session implements Comparable<Session> {
             return compare;
         return this.getNumber().compareTo(that.getNumber());
     }
+
     void setNumberOfCredits(int numberOfCredits) {
         this.numberOfCredits = numberOfCredits;
-    }public String getDepartment() {
+    }
+
+    public String getDepartment() {
         return department;
     }
+
     public String getNumber() {
         return number;
     }
+
     int getNumberOfStudents() {
         return students.size();
     }
+
     public void enroll(Student student) {
         student.addCredits(numberOfCredits);
         students.add(student);
     }
+
     Student get(int index) {
         return students.get(index);
     }
+
     protected Date getStartDate() {
         return startDate;
     }
+
     public List<Student> getAllStudents() {
         return students;
     }
+
     abstract protected int getSessionLength();
+
     public Date getEndDate() {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(getStartDate());

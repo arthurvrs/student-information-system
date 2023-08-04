@@ -15,7 +15,7 @@ public class Student implements Comparable<Student>{
         D(1),
         F(0);
 
-        private int points;
+        private final int points;
 
         Grade(int points) {
             this.points = points;
