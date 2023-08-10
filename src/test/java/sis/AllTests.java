@@ -20,6 +20,7 @@ public class AllTests {
         suite.addTestSuite(HonorsGradingStrategyTest.class);
         suite.addTestSuite(SummerCourseSessionTest.class);
         //suite.addTestSuite(SessionTest.class);
+        suite.addTestSuite(PerformanceTest.class);
 
         return suite;
     }

@@ -1,7 +1,6 @@
 package sis.studentinfo;
 
 import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
 
 public class StudentTest extends TestCase {
 
@@ -13,25 +12,33 @@ public class StudentTest extends TestCase {
         student = new Student("Arthur Vinícius");
     }
 
-    @Test
     public void testCreate() {
-        final String firstStudentName = "Arthur Vinícius";
+        final String firstStudentName = "Arthur Santos";
         Student student1 = new Student(firstStudentName);
         assertEquals(firstStudentName, student1.getName());
+        assertEquals("Arthur", student1.getFirstName());
+        assertEquals("Santos", student1.getLastName());
+        assertEquals("", student1.getMiddleName());
 
-        final String secondStudentName = "José João";
+        final String secondStudentName = "José";
         Student student2 = new Student(secondStudentName);
         assertEquals(secondStudentName, student2.getName());
+        assertEquals("", student2.getFirstName());
+        assertEquals("José", student2.getLastName());
+        assertEquals("", student2.getMiddleName());
 
-        assertEquals(firstStudentName, student1.getName());
+        final String thirdStudentName = "Maria Madalena Silva";
+        Student thirdStudent = new Student(thirdStudentName);
+        assertEquals(thirdStudentName, thirdStudent.getName());
+        assertEquals("Maria", thirdStudent.getFirstName());
+        assertEquals("Silva", thirdStudent.getLastName());
+        assertEquals("Madalena", thirdStudent.getMiddleName());
     }
 
-    @Test
     public void testFullTime() {
         assertFalse(student.isFullTime());
     }
 
-    @Test
     public void testCredits() {
         assertEquals(0, student.getCredits());
         student.addCredits(3);
@@ -40,7 +47,6 @@ public class StudentTest extends TestCase {
         assertEquals(7, student.getCredits());
     }
 
-    @Test
     public void testStudentStatus() {
         assertEquals(0, student.getCredits());
         enoughCredits();
@@ -56,7 +62,7 @@ public class StudentTest extends TestCase {
     }
 
     private void enoughCredits() {
-        assertFalse("Okay, now you are a full time studente. Enjoy this miserable life! :)", student.isFullTime());
+        assertFalse("Okay, now you are a full time student. Enjoy this miserable life! :)", student.isFullTime());
     }
 
     public void testInState() {
@@ -105,6 +111,14 @@ public class StudentTest extends TestCase {
         student = new Student("Luisa Mel");
         student.setGradingStrategy(new HonorsGradingStrategy());
         return student;
+    }
+
+    public void testCharges() {
+        Student student = new Student("a");
+        student.addCharge(500);
+        student.addCharge(200);
+        student.addCharge(399);
+        assertEquals(1099, student.totalCharges());
     }
 
 }
