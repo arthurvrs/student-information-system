@@ -21,6 +21,7 @@ public class AllTests {
         suite.addTestSuite(SummerCourseSessionTest.class);
         //suite.addTestSuite(SessionTest.class);
         suite.addTestSuite(PerformanceTest.class);
+        suite.addTestSuite(ScorerTest.class);
 
         return suite;
     }

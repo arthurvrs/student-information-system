@@ -1,6 +1,7 @@
 package sis.studentinfo;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Student implements Comparable<Student>{
 
@@ -10,7 +11,7 @@ public class Student implements Comparable<Student>{
     private String lastName;
     private int credits;
     private String state = "";
-    private final ArrayList<Grade> grades = new ArrayList<>();;
+    private final ArrayList<Grade> grades = new ArrayList<>();
     public enum Grade {
         A(4),
         B(3),
@@ -34,10 +35,19 @@ public class Student implements Comparable<Student>{
     public static final String IN_STATE = "CO";
     private final List<Integer> charges = new ArrayList<>();
 
+    final static Logger logger = Logger.getLogger(Student.class.getName());
+    static final String TOO_MANY_NAME_PARTS_MSG =
+            "Student name '%s' contains more than %d parts";
+
     public Student(String name) {
         this.name = name;
         this.credits = 0;
         List<String> nameParts = split(name);
+        if(nameParts.size() > 3) {
+            String message = String.format(TOO_MANY_NAME_PARTS_MSG, name, 3);
+            Student.logger.info(message);
+            throw new StudentNameFormatException(message);
+        }
         setName(nameParts);
     }
 
@@ -103,6 +113,7 @@ public class Student implements Comparable<Student>{
     }
 
     public double getGpa() {
+        Student.logger.fine("begin getGpa " + System.currentTimeMillis());
         if(grades.isEmpty()) {
             return 0.0;
         }
@@ -110,6 +121,7 @@ public class Student implements Comparable<Student>{
         for(Grade grade : grades) {
             total += gradingStrategy.getGradePointsFor(grade);
         }
+        Student.logger.fine("end getGpa " + System.currentTimeMillis());
         return total / grades.size();
     }
 

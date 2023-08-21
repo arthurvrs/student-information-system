@@ -2,6 +2,8 @@ package sis.studentinfo;
 
 import junit.framework.TestCase;
 
+import java.util.logging.Logger;
+
 public class StudentTest extends TestCase {
 
     private Student student;
@@ -119,6 +121,29 @@ public class StudentTest extends TestCase {
         student.addCharge(200);
         student.addCharge(399);
         assertEquals(1099, student.totalCharges());
+    }
+
+    public void testBadlyFormattedName() {
+        TestHandler handler = new TestHandler();
+        Student.logger.addHandler(handler);
+        String studentName = "a b c d";
+        try {
+            new Student("a b c d");
+            fail("expected exception from 4-part name");
+        } catch (StudentNameFormatException e) {
+            String message = String.format(Student.TOO_MANY_NAME_PARTS_MSG, studentName, 3);
+            assertEquals(message, e.getMessage());
+            assertEquals(message, handler.getMessage());
+        }
+    }
+
+    public void testLoggingHierarchy() {
+        Logger logger = Logger.getLogger("sis.studentinfo.Student");
+        assertTrue(logger == Logger.getLogger("sis.studentinfo.Student"));
+
+        Logger parent = Logger.getLogger("sis.studentinfo");
+        assertEquals(parent, logger.getParent());
+        assertEquals(Logger.getLogger("sis"), parent.getParent());
     }
 
 }
