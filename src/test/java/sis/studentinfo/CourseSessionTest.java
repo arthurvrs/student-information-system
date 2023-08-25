@@ -44,7 +44,7 @@ public class CourseSessionTest extends SessionTest {
     @Test
     public void testCourseDates() {
         Date startDate = DateUtil.createDate(2003, 1, 6);
-        Session session = createSession("ENGL", "200", startDate);
+        Session session = createSession(new Course("ENGL", "200"), startDate);
         Date sixteenWeeksOut = DateUtil.createDate(2003, 4, 25);
         assertEquals(sixteenWeeksOut, session.getEndDate());
     }
@@ -52,21 +52,24 @@ public class CourseSessionTest extends SessionTest {
     @Test
     public void testCount() {
         CourseSession.resetCount();
-        createSession("", "", new Date());
+        createSession(createCourse(), new Date());
         assertEquals(1, CourseSession.getCount());
-        createSession("", "", new Date());
+        createSession(createCourse(), new Date());
         assertEquals(2, CourseSession.getCount());
     }
 
+    private Course createCourse() {
+        return new Course("ENGL", "101");
+    }
+
     protected Session createSession(
-            String department,
-            String number,
+            Course course,
             Date date) {
-        return CourseSession.create(department, number, date);
+        return CourseSession.create(course, date);
     }
 
     private CourseSession createCourseSession() {
-        CourseSession session = CourseSession.create("ENGL", "101", startDate);
+        CourseSession session = CourseSession.create(new Course("ENGL", "101"), startDate);
         session.setNumberOfCredits(CourseSessionTest.CREDITS);
         return session;
     }
@@ -75,13 +78,13 @@ public class CourseSessionTest extends SessionTest {
     public void testComparable() {
 
         final Date date = new Date();
-        CourseSession sessionA = CourseSession.create("CMSC", "101", date);
-        CourseSession sessionB = CourseSession.create("ENGL", "101", date);
+        CourseSession sessionA = (CourseSession) createSession(new Course("CMSC", "101"), date);
+        CourseSession sessionB = (CourseSession) createSession(new Course("ENGL", "101"), date);
         assertTrue(sessionA.compareTo(sessionB) < 0);
         assertTrue(sessionB.compareTo(sessionA) > 0);
-        CourseSession sessionC = CourseSession.create("CMSC", "101", date);
+        CourseSession sessionC = (CourseSession) createSession(new Course("CMSC", "101"), date);
         assertEquals(0, sessionA.compareTo(sessionC));
-        CourseSession sessionD = CourseSession.create("CMSC", "210", date);
+        CourseSession sessionD = (CourseSession) createSession(new Course("CMSC", "210"), date);
         assertTrue(sessionC.compareTo(sessionD) < 0);
         assertTrue(sessionD.compareTo(sessionC) > 0);
     }
