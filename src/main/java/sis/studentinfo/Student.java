@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 public class Student implements Comparable<Student>{
 
+    private String id;
     private String name;
     private String firstName = "";
     private String middleName = "";
@@ -84,6 +85,13 @@ public class Student implements Comparable<Student>{
         this.name = name;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
     public String getName() {
         return this.name;
     }
