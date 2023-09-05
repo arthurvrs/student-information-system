@@ -33,4 +33,8 @@ public class PerformanceTest extends TestCase {
         assertEquals(95.0, performance.average(), tolerance);
     }
 
+    public void testAverageForNoScores() {
+        Performance performance = new Performance();
+        assertTrue(Double.isNaN(performance.average()));
+    }
 }
