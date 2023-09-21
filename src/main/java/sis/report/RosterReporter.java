@@ -1,54 +1,52 @@
 package sis.report;
 
 import sis.studentinfo.*;
-
-import java.util.List;
+import java.io.*;
 
 public class RosterReporter {
 
     static final String NEWLINE =
             System.getProperty("line.separator");
     static final String ROSTER_REPORT_HEADER =
-            "Student" + NEWLINE + "-" + NEWLINE;
+            "Student%n-%n";
     static final String ROSTER_REPORT_FOOTER =
-            NEWLINE + "# students = ";
+            "%n# students = %d%n";
 
-    private CourseSession session;
+    private Session session;
+    private Writer writer;
 
-    public RosterReporter(CourseSession session) {
+    public RosterReporter(Session session) {
         this.session = session;
     }
 
-    public String getReport() {
-        StringBuilder buffer = new StringBuilder();
+    void writeReport(Writer writer) throws IOException {
+        this.writer = writer;
+        writeHeader();
+        writeBody();
+        writeFooter();
+    }
 
-        buffer.append(ROSTER_REPORT_HEADER);
-
-        List<Student> students = session.getAllStudents();
-
-        for(Student student: students) {
-            buffer.append(student.getName());
-            buffer.append(NEWLINE);
+    void writeReport(String filename) throws IOException {
+        Writer bufferedWriter = new BufferedWriter(new FileWriter(filename));
+        try {
+            writeReport(bufferedWriter);
+        } finally {
+            bufferedWriter.close();
         }
-
-        buffer.append(ROSTER_REPORT_FOOTER + students.size() + NEWLINE);
-
-        return buffer.toString();
     }
 
-    private void writeHeader(StringBuilder buffer) {
-        buffer.append(ROSTER_REPORT_HEADER);
+    private void writeHeader() throws IOException {
+        writer.write(String.format(ROSTER_REPORT_HEADER));
     }
 
-    private void writeBody(StringBuilder buffer) {
+    private void writeBody() throws IOException {
         for(Student student: session.getAllStudents()) {
-            buffer.append(student.getName());
-            buffer.append(NEWLINE);
+            writer.write(String.format(student.getName() + "%n"));
         }
     }
 
-    private void writeFooter(StringBuilder buffer) {
-        buffer.append(ROSTER_REPORT_FOOTER);
+    private void writeFooter() throws IOException {
+        writer.write(String.format(ROSTER_REPORT_FOOTER, session.getAllStudents().size()));
     }
 
 }

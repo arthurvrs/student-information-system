@@ -37,7 +37,7 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
         return course.getNumber();
     }
 
-    int getNumberOfStudents() {
+    public int getNumberOfStudents() {
         return students.size();
     }
 
