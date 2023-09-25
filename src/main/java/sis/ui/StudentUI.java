@@ -55,7 +55,7 @@ public class StudentUI {
         writer.flush();
     }
 
-    public static void main(String[] args) throws IOException a{
+    public static void main(String[] args) throws IOException {
         new StudentUI().run();
     }
 }
