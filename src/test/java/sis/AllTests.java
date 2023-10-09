@@ -5,6 +5,7 @@ import sis.report.*;
 
 import junit.framework.TestSuite;
 import sis.summer.SummerCourseSessionTest;
+import sis.ui.StudentUITest;
 
 public class AllTests {
 
@@ -17,6 +18,7 @@ public class AllTests {
         suite.addTestSuite(ScorerTest.class);
         suite.addTestSuite(StudentDirectoryTest.class);
         suite.addTestSuite(ReportCardTest.class);
+        suite.addTestSuite(StudentUITest.class);
 
         //Course Tests
         //suite.addTestSuite(SessionTest.class);
@@ -27,6 +29,7 @@ public class AllTests {
         suite.addTestSuite(BasicGradingStrategyTest.class);
         suite.addTestSuite(HonorsGradingStrategyTest.class);
         suite.addTestSuite(SummerCourseSessionTest.class);
+        suite.addTestSuite(CourseCatalogTest.class);
 
 
         suite.addTestSuite(DateUtilTest.class);

@@ -2,11 +2,12 @@ package sis.studentinfo;
 
 import java.util.*;
 import java.net.*;
+import java.io.*;
 
-abstract public class Session implements Comparable<Session>, Iterable<Student> {
+abstract public class Session implements Comparable<Session>, Iterable<Student>, Serializable {
     private static int count;
     private Course course;
-    private List<Student> students = new ArrayList<Student>();
+    private transient List<Student> students = new ArrayList<Student>();
     private Date startDate;
     private int numberOfCredits;
     private URL url;
@@ -27,6 +28,10 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
 
     void setNumberOfCredits(int numberOfCredits) {
         this.numberOfCredits = numberOfCredits;
+    }
+
+    int getNumberOfCredits() {
+        return numberOfCredits;
     }
 
     public String getDepartment() {
@@ -102,5 +107,22 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
 
     public URL getUrl() {
         return url;
+    }
+
+    private void writeObject(ObjectOutputStream output) throws IOException {
+        output.defaultWriteObject();
+        output.writeInt(students.size());
+        for(Student student : students)
+            output.writeObject(student.getLastName());
+    }
+
+    private void readObject(ObjectInputStream input) throws Exception {
+        input.defaultReadObject();
+        students = new ArrayList<>();
+        int size = input.readInt();
+        for(int i = 0; i < size; i++) {
+            String lastName = (String)input.readObject();
+            students.add(Student.findByLastName(lastName));
+        }
     }
 }

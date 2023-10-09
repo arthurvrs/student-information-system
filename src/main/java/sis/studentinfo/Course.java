@@ -1,6 +1,8 @@
 package sis.studentinfo;
 
-public class Course {
+import java.io.*;
+
+public class Course implements Serializable {
 
     private String department, number;
 
