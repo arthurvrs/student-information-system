@@ -1,11 +1,14 @@
 package sis;
 
+import sis.db.DataFileTest;
+import sis.db.KeyFileTest;
 import sis.studentinfo.*;
 import sis.report.*;
 
 import junit.framework.TestSuite;
 import sis.summer.SummerCourseSessionTest;
 import sis.ui.StudentUITest;
+import sis.util.IOUtilTest;
 
 public class AllTests {
 
@@ -31,6 +34,10 @@ public class AllTests {
         suite.addTestSuite(SummerCourseSessionTest.class);
         suite.addTestSuite(CourseCatalogTest.class);
 
+        //DataBase Tests
+        suite.addTestSuite(DataFileTest.class);
+        suite.addTestSuite(KeyFileTest.class);
+        suite.addTestSuite(IOUtilTest.class);
 
         suite.addTestSuite(DateUtilTest.class);
 
