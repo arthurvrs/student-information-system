@@ -2,6 +2,7 @@ package sis;
 
 import sis.db.DataFileTest;
 import sis.db.KeyFileTest;
+import sis.security.SecureProxyTest;
 import sis.studentinfo.*;
 import sis.report.*;
 
@@ -27,7 +28,11 @@ public class AllTests {
         suite.addTestSuite(ReportCardTest.class);
         suite.addTestSuite(RosterReporterTest.class);
 
+        //Security Tests
+        suite.addTestSuite(SecureProxyTest.class);
+
         //Student Info Tests
+        suite.addTestSuite(AccountFactoryTest.class);
         suite.addTestSuite(AccountTest.class);
         suite.addTestSuite(BasicGradingStrategyTest.class);
         suite.addTestSuite(CourseCatalogTest.class);
@@ -52,6 +57,8 @@ public class AllTests {
         suite.addTestSuite(MathTest.class);
         suite.addTestSuite(ParityCheckerTest.class);
         suite.addTestSuite(PasswordGeneratorTest.class);
+
+
 
         return suite;
     }
