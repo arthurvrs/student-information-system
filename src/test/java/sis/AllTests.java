@@ -2,6 +2,9 @@ package sis;
 
 import sis.db.DataFileTest;
 import sis.db.KeyFileTest;
+import sis.search.SearchTest;
+import sis.search.Server;
+import sis.search.ServerTest;
 import sis.security.SecureProxyTest;
 import sis.studentinfo.*;
 import sis.report.*;
@@ -9,10 +12,7 @@ import sis.report.*;
 import junit.framework.TestSuite;
 import sis.summer.SummerCourseSessionTest;
 import sis.ui.StudentUITest;
-import sis.util.IOUtilTest;
-import sis.util.MathTest;
-import sis.util.ParityCheckerTest;
-import sis.util.PasswordGeneratorTest;
+import sis.util.*;
 
 public class AllTests {
 
@@ -27,6 +27,10 @@ public class AllTests {
         suite.addTestSuite(CourseReportTest.class);
         suite.addTestSuite(ReportCardTest.class);
         suite.addTestSuite(RosterReporterTest.class);
+
+        //Search Tests
+        suite.addTestSuite(SearchTest.class);
+        suite.addTestSuite(ServerTest.class);
 
         //Security Tests
         suite.addTestSuite(SecureProxyTest.class);
@@ -54,11 +58,11 @@ public class AllTests {
 
         //Util Tests
         suite.addTestSuite(IOUtilTest.class);
+        suite.addTestSuite(LineWriterTest.class);
         suite.addTestSuite(MathTest.class);
         suite.addTestSuite(ParityCheckerTest.class);
         suite.addTestSuite(PasswordGeneratorTest.class);
-
-
+        suite.addTestSuite(StringUtilTest.class);
 
         return suite;
     }
