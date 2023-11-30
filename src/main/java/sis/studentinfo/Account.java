@@ -56,6 +56,12 @@ public class Account implements Accountable {
             credit(amount);
     }
 
+    public synchronized void withdraw(BigDecimal amount) {
+        if(amount.compareTo(balance) > 0)
+            return;
+        balance = balance.subtract(amount);
+    }
+
     private AchCredentials createCredentials() {
         AchCredentials credentials = new AchCredentials();
         credentials.merchantId = "12355";

@@ -1,9 +1,10 @@
 package sis.search;
 
 import junit.framework.TestCase;
-import sis.util.*;
 
-import java.io.IOException;
+import java.net.URLConnection;
+import java.util.*;
+import sis.util.*;
 
 public class ServerTest extends TestCase {
 
@@ -27,30 +28,60 @@ public class ServerTest extends TestCase {
         server = new Server(listener);
     }
 
-    protected void tearDown() throws IOException {
+    protected void tearDown() throws Exception {
+        assertTrue(server.isAlive());
+        server.shutDown();
+        server.join(3000);
+        assertFalse(server.isAlive());
         TestUtil.delete(SearchTest.FILE);
     }
 
     public void testSearch() throws Exception {
         long start = System.currentTimeMillis();
-        for(String url : URLS)
-            server.add(new Search(url, "xxx"));
+        executeSearches();
         long elapsed = System.currentTimeMillis() - start;
-        long averageLatency = elapsed / URLS.length;
-        assertTrue(averageLatency < 20);
-        assertTrue(waitForResults());
+        assertTrue(elapsed < 20);
+        waitForResults();
     }
 
-    private boolean waitForResults() {
+    public void testLogs() throws Exception {
+        executeSearches();
+        waitForResults();
+        verifyLogs();
+    }
+
+    private void executeSearches() throws Exception {
+        for(String url : URLS)
+            server.add(new Search(url, "xxx"));
+    }
+
+    private void waitForResults() {
         long start = System.currentTimeMillis();
         while(numberOfResults < URLS.length) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {}
             if(System.currentTimeMillis() - start > TIMEOUT)
-                return false;
+                fail("timeout");
         }
-        return true;
     }
 
+    private void verifyLogs() {
+        List<String> list = server.getLog();
+        assertEquals(URLS.length * 2, list.size());
+        for(int i = 0; i < URLS.length; i += 2)
+            verifySameSearch(list.get(i), list.get(i + 1));
+    }
+
+    private void verifySameSearch(String startSearchMsg, String endSearchMsg) {
+        String startSearch = substring(startSearchMsg, Server.START_MSG);
+        String endSearch = substring(endSearchMsg, Server.END_MSG);
+        assertEquals(startSearch, endSearch);
+    }
+
+    private String substring(String string, String upTo) {
+        int endIndex = string.indexOf(upTo);
+        assertTrue("didn't find " + upTo + " in " + string, endIndex != - 1);
+        return string.substring(0, endIndex);
+    }
 }

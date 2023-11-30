@@ -1,7 +1,9 @@
 package sis;
 
+import sis.clock.ClockTest;
 import sis.db.DataFileTest;
 import sis.db.KeyFileTest;
+import sis.search.SearchSchedulerTest;
 import sis.search.SearchTest;
 import sis.search.Server;
 import sis.search.ServerTest;
@@ -19,6 +21,9 @@ public class AllTests {
     public static TestSuite suite() {
         TestSuite suite = new TestSuite();
 
+        //Clock Tests
+        suite.addTestSuite(ClockTest.class);
+
         //DataBase Tests
         suite.addTestSuite(DataFileTest.class);
         suite.addTestSuite(KeyFileTest.class);
@@ -29,6 +34,7 @@ public class AllTests {
         suite.addTestSuite(RosterReporterTest.class);
 
         //Search Tests
+        suite.addTestSuite(SearchSchedulerTest.class);
         suite.addTestSuite(SearchTest.class);
         suite.addTestSuite(ServerTest.class);
 
@@ -44,6 +50,7 @@ public class AllTests {
         suite.addTestSuite(CourseTest.class);
         suite.addTestSuite(DateUtilTest.class);
         suite.addTestSuite(HonorsGradingStrategyTest.class);
+        suite.addTestSuite(MultithreadedAccountTest.class);
         suite.addTestSuite(PerformanceTest.class);
         suite.addTestSuite(ScorerTest.class);
         //suite.addTestSuite(SessionTest.class);
